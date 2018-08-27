@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Tinkoff\Business\Exception\ApiException;
 use Tinkoff\Business\Exception\ArgumentException;
 use Tinkoff\Business\Exception\HttpException;
+use Tinkoff\Business\Exception\NotFoundException;
 use Tinkoff\Business\Model\Account;
 use Tinkoff\Business\Model\AccountCollection;
 use Tinkoff\Business\Model\Balance;
@@ -17,6 +18,7 @@ class Tinkoff
 {
     private const HTTP_GET = 'GET';
     private const HTTP_POST = 'POST';
+
     private $inn;
     private $access_token;
 
@@ -145,8 +147,8 @@ class Tinkoff
     /**
      * Получение выписки
      *
-     * @param array $options [accountNumber, from, till]
-     * $options[accountNumber] string Номер расчетного счета (обязательный)
+     * @param string $accountNumber Номер расчетного счета
+     * @param array $options
      * $options[from] \DateTime Дата начала периода (опциональный, если не передан, берем дату конца - 1
      *     месяц).
      * $options[till] \DateTime Дата конца периода (опциональный, если не передан, берем по сегодняшний
@@ -157,12 +159,17 @@ class Tinkoff
      * @throws ApiException
      * @throws ArgumentException
      * @throws HttpException
+     * @throws NotFoundException
      */
-    public function getOperations(array $options = []): Account
+    public function getAccount($accountNumber, array $options = []): Account
     {
-        if (!$options['accountNumber']) {
+        if (!$accountNumber) {
             throw new ArgumentException('Parameter accountNumber is required');
         }
+
+        $account = $this->getAccounts()->getByAccountNumber($accountNumber);
+
+        $options['accountNumber'] = $accountNumber;
         if ($options['from'] instanceof \DateTime) {
             $options['from'] = $options['from']->format('Y-m-d\+H:i:s');
         } else {
@@ -176,13 +183,10 @@ class Tinkoff
 
         $result = $this->query('excerpt', $options);
 
-        $account = new Account();
-        if ($result['accountNumber']) {
-            $account->setAccountNumber($result['accountNumber']);
-        }
         if ($result['saldoIn']) {
             $account->setSaldoIn($result['saldoIn']);
         }
+
         if ($result['saldoOut']) {
             $account->setSaldoOut($result['saldoOut']);
         }
