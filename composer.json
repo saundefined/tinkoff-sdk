@@ -1,0 +1,29 @@
+{
+  "name": "saundefined/tinkoff",
+  "description": "Tinkoff Business SDK",
+  "keywords": [
+    "tinkoff",
+    "business",
+    "sme",
+    "sdk"
+  ],
+  "type": "library",
+  "homepage": "https://github.com/saundefined/tinkoff",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Panteleev Sergey",
+      "email": "sergey@s-panteleev.ru"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tinkoff\\Business\\": "src/"
+    }
+  }
+}
