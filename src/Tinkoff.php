@@ -367,7 +367,7 @@ class Tinkoff
         if ($payment->getKbk() !== null) {
             $options['kbk'] = $payment->getKbk();
         }
-        if ($payment->getOktmo()) {
+        if ($payment->getOktmo() !== null) {
             $options['oktmo'] = $payment->getOktmo();
         }
         if ($payment->getTaxEvidence() !== null) {
