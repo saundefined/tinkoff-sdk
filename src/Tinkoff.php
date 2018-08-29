@@ -314,7 +314,7 @@ class Tinkoff
      * @throws ArgumentException
      * @throws HttpException
      */
-    public function sendPayment(Payment $payment)
+    public function sendPayment(Payment $payment): int
     {
         $options = [
             'kpp' => '0',

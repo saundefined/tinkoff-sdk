@@ -3,7 +3,7 @@
 namespace Tinkoff\Business\Model;
 
 use Tinkoff\Business\Base\BaseCollection;
-use Tinkoff\Business\Exception\NotFoundException;
+use Tinkoff\Business\Exception\OutOfRangeException;
 
 class AccountCollection extends BaseCollection
 {
@@ -17,18 +17,14 @@ class AccountCollection extends BaseCollection
      *
      * @return Account
      *
-     * @throws NotFoundException
+     * @throws OutOfRangeException
      */
     public function getByAccountNumber($accountNumber): Account
     {
-        /** @var Account $account */
-        foreach ($this->getArray() as $account) {
-            if ($account->getAccountNumber() === $accountNumber) {
-                return $account;
-            }
-        }
-
-        throw new NotFoundException('Account ' . $accountNumber . ' not found');
+        return $this->find(function ($account) use ($accountNumber) {
+            /** @var Account $account */
+            return $account->getAccountNumber() === $accountNumber;
+        });
     }
 
 }
