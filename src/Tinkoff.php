@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 use Tinkoff\Business\Exception\ApiException;
 use Tinkoff\Business\Exception\ArgumentException;
 use Tinkoff\Business\Exception\HttpException;
-use Tinkoff\Business\Exception\NotFoundException;
 use Tinkoff\Business\Model\Account;
 use Tinkoff\Business\Model\AccountCollection;
 use Tinkoff\Business\Model\Balance;
@@ -43,30 +42,30 @@ class Tinkoff
         $accountCollection = new AccountCollection();
         foreach ($result as $item) {
             $account = new Account();
-            if ($item['accountNumber']) {
+            if (isset($item['accountNumber'])) {
                 $account->setAccountNumber($item['accountNumber']);
             }
-            if ($item['status']) {
+            if (isset($item['status'])) {
                 $account->setStatus($item['status']);
             }
-            if ($item['name']) {
+            if (isset($item['name'])) {
                 $account->setName($item['name']);
             }
-            if ($item['currency']) {
+            if (isset($item['currency'])) {
                 $account->setCurrency($item['currency']);
             }
 
             $balance = new Balance();
-            if ($item['balance']['otb']) {
+            if (isset($item['balance']['otb'])) {
                 $balance->setOtb($item['balance']['otb']);
             }
-            if ($item['balance']['authorized']) {
+            if (isset($item['balance']['authorized'])) {
                 $balance->setAuthorized($item['balance']['authorized']);
             }
-            if ($item['balance']['pendingPayments']) {
+            if (isset($item['balance']['pendingPayments'])) {
                 $balance->setPendingPayments($item['balance']['pendingPayments']);
             }
-            if ($item['balance']['pendingRequisitions']) {
+            if (isset($item['balance']['pendingRequisitions'])) {
                 $balance->setPendingRequisitions($item['balance']['pendingRequisitions']);
             }
 
@@ -92,7 +91,7 @@ class Tinkoff
      */
     private function query($command, array $options = [], $method = self::HTTP_GET): array
     {
-        if (!$this->inn || !$this->access_token) {
+        if (($this->inn === null) || ($this->access_token === null)) {
             throw new ArgumentException('Parameters inn and access_token are required');
         }
 
@@ -121,7 +120,7 @@ class Tinkoff
             throw new HttpException('Api response status code is not 200');
         }
 
-        if ($result['errorCode'] && $result['errorMessage']) {
+        if (isset($result['errorMessage'], $result['errorCode'])) {
             throw new ApiException('[' . $result['errorCode'] . '] ' . $result['errorMessage']);
         }
 
@@ -159,7 +158,7 @@ class Tinkoff
      * @throws ApiException
      * @throws ArgumentException
      * @throws HttpException
-     * @throws NotFoundException
+     * @throws Exception\OutOfRangeException
      */
     public function getAccount($accountNumber, array $options = []): Account
     {
@@ -183,17 +182,17 @@ class Tinkoff
 
         $result = $this->query('excerpt', $options);
 
-        if ($result['saldoIn']) {
+        if (isset($result['saldoIn'])) {
             $account->setSaldoIn($result['saldoIn']);
         }
 
-        if ($result['saldoOut']) {
+        if (isset($result['saldoOut'])) {
             $account->setSaldoOut($result['saldoOut']);
         }
-        if ($result['income']) {
+        if (isset($result['income'])) {
             $account->setIncome($result['income']);
         }
-        if ($result['outcome']) {
+        if (isset($result['outcome'])) {
             $account->setOutcome($result['outcome']);
         }
 
@@ -201,97 +200,97 @@ class Tinkoff
         foreach ($result['operation'] as $item) {
             $operation = new Operation();
 
-            if ($item['id']) {
+            if (isset($item['id'])) {
                 $operation->setId($item['id']);
             }
-            if ($item['date']) {
+            if (isset($item['date'])) {
                 $operation->setDate(new \DateTime($item['date']));
             }
-            if ($item['amount']) {
+            if (isset($item['amount'])) {
                 $operation->setAmount($item['amount']);
             }
-            if ($item['drawDate']) {
+            if (isset($item['drawDate'])) {
                 $operation->setDrawDate(new \DateTime($item['drawDate']));
             }
-            if ($item['payerName']) {
+            if (isset($item['payerName'])) {
                 $operation->setPayerName($item['payerName']);
             }
-            if ($item['payerInn']) {
+            if (isset($item['payerInn'])) {
                 $operation->setPayerInn($item['payerInn']);
             }
-            if ($item['payerKpp']) {
+            if (isset($item['payerKpp'])) {
                 $operation->setPayerKpp($item['payerKpp']);
             }
-            if ($item['payerAccount']) {
+            if (isset($item['payerAccount'])) {
                 $operation->setPayerAccount($item['payerAccount']);
             }
-            if ($item['payerCorrAccount']) {
+            if (isset($item['payerCorrAccount'])) {
                 $operation->setPayerCorrAccount($item['payerCorrAccount']);
             }
-            if ($item['payerBic']) {
+            if (isset($item['payerBic'])) {
                 $operation->setPayerBic($item['payerBic']);
             }
-            if ($item['payerBank']) {
+            if (isset($item['payerBank'])) {
                 $operation->setPayerBank($item['payerBank']);
             }
-            if ($item['chargeDate']) {
+            if (isset($item['chargeDate'])) {
                 $operation->setChargeDate(new \DateTime($item['chargeDate']));
             }
-            if ($item['recipient']) {
+            if (isset($item['recipient'])) {
                 $operation->setRecipient($item['recipient']);
             }
-            if ($item['recipientInn']) {
+            if (isset($item['recipientInn'])) {
                 $operation->setRecipientInn($item['recipientInn']);
             }
-            if ($item['recipientKpp']) {
+            if (isset($item['recipientKpp'])) {
                 $operation->setRecipientKpp($item['recipientKpp']);
             }
-            if ($item['recipientAccount']) {
+            if (isset($item['recipientAccount'])) {
                 $operation->setRecipientAccount($item['recipientAccount']);
             }
-            if ($item['recipientCorrAccount']) {
+            if (isset($item['recipientCorrAccount'])) {
                 $operation->setRecipientCorrAccount($item['recipientCorrAccount']);
             }
-            if ($item['recipientBic']) {
+            if (isset($item['recipientBic'])) {
                 $operation->setRecipientBic($item['recipientBic']);
             }
-            if ($item['recipientBank']) {
+            if (isset($item['recipientBank'])) {
                 $operation->setRecipientBank($item['recipientBank']);
             }
-            if ($item['operationType']) {
+            if (isset($item['operationType'])) {
                 $operation->setOperationType($item['operationType']);
             }
-            if ($item['uin']) {
+            if (isset($item['uin'])) {
                 $operation->setUin($item['uin']);
             }
-            if ($item['paymentPurpose']) {
+            if (isset($item['paymentPurpose'])) {
                 $operation->setPaymentPurpose($item['paymentPurpose']);
             }
-            if ($item['creatorStatus']) {
+            if (isset($item['creatorStatus'])) {
                 $operation->setCreatorStatus($item['creatorStatus']);
             }
-            if ($item['kbk']) {
+            if (isset($item['kbk'])) {
                 $operation->setKbk($item['kbk']);
             }
-            if ($item['oktmo']) {
+            if (isset($item['oktmo'])) {
                 $operation->setOktmo($item['oktmo']);
             }
-            if ($item['taxEvidence']) {
+            if (isset($item['taxEvidence'])) {
                 $operation->setTaxEvidence($item['taxEvidence']);
             }
-            if ($item['taxPeriod']) {
+            if (isset($item['taxPeriod'])) {
                 $operation->setTaxPeriod($item['taxPeriod']);
             }
-            if ($item['taxDocNumber']) {
+            if (isset($item['taxDocNumber'])) {
                 $operation->setTaxDocNumber($item['taxDocNumber']);
             }
-            if ($item['taxDocDate']) {
+            if (isset($item['taxDocDate'])) {
                 $operation->setTaxDocDate(new \DateTime($item['taxDocDate']));
             }
-            if ($item['taxType']) {
+            if (isset($item['taxType'])) {
                 $operation->setTaxType($item['taxType']);
             }
-            if ($item['executionOrder']) {
+            if (isset($item['executionOrder'])) {
                 $operation->setExecutionOrder($item['executionOrder']);
             }
 

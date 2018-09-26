@@ -68,19 +68,19 @@ class Client
         ]);
 
         $response = new OAuthResponse();
-        if ($result['access_token']) {
+        if (isset($result['access_token'])) {
             $response->setAccessToken($result['access_token']);
         }
-        if ($result['token_type']) {
+        if (isset($result['token_type'])) {
             $response->setTokenType($result['token_type']);
         }
-        if ($result['expires_in']) {
+        if (isset($result['expires_in'])) {
             $response->setExpiresIn($result['expires_in']);
         }
-        if ($result['id_token']) {
+        if (isset($result['id_token'])) {
             $response->setIdToken($result['id_token']);
         }
-        if ($result['refresh_token']) {
+        if (isset($result['refresh_token'])) {
             $response->setRefreshToken($result['refresh_token']);
         }
 
@@ -112,7 +112,7 @@ class Client
             throw new HttpException('Api response status code is not 200');
         }
 
-        if ($result['errorCode'] && $result['errorMessage']) {
+        if (isset($result['errorMessage'], $result['errorCode'])) {
             throw new ApiException('[' . $result['errorCode'] . '] ' . $result['errorMessage']);
         }
 
@@ -136,19 +136,19 @@ class Client
         ]);
 
         $response = new OAuthResponse();
-        if ($result['access_token']) {
+        if (isset($result['access_token'])) {
             $response->setAccessToken($result['access_token']);
         }
-        if ($result['token_type']) {
+        if (isset($result['token_type'])) {
             $response->setTokenType($result['token_type']);
         }
-        if ($result['expires_in']) {
+        if (isset($result['expires_in'])) {
             $response->setExpiresIn($result['expires_in']);
         }
-        if ($result['id_token']) {
+        if (isset($result['id_token'])) {
             $response->setIdToken($result['id_token']);
         }
-        if ($result['refresh_token']) {
+        if (isset($result['refresh_token'])) {
             $response->setRefreshToken($result['refresh_token']);
         }
 
