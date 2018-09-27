@@ -68,19 +68,19 @@ class Client
         ]);
 
         $response = new OAuthResponse();
-        if (isset($result['access_token'])) {
+        if (!empty($result['access_token'])) {
             $response->setAccessToken($result['access_token']);
         }
-        if (isset($result['token_type'])) {
+        if (!empty($result['token_type'])) {
             $response->setTokenType($result['token_type']);
         }
-        if (isset($result['expires_in'])) {
+        if (!empty($result['expires_in'])) {
             $response->setExpiresIn($result['expires_in']);
         }
-        if (isset($result['id_token'])) {
+        if (!empty($result['id_token'])) {
             $response->setIdToken($result['id_token']);
         }
-        if (isset($result['refresh_token'])) {
+        if (!empty($result['refresh_token'])) {
             $response->setRefreshToken($result['refresh_token']);
         }
 
@@ -136,19 +136,19 @@ class Client
         ]);
 
         $response = new OAuthResponse();
-        if (isset($result['access_token'])) {
+        if (!empty($result['access_token'])) {
             $response->setAccessToken($result['access_token']);
         }
-        if (isset($result['token_type'])) {
+        if (!empty($result['token_type'])) {
             $response->setTokenType($result['token_type']);
         }
-        if (isset($result['expires_in'])) {
+        if (!empty($result['expires_in'])) {
             $response->setExpiresIn($result['expires_in']);
         }
-        if (isset($result['id_token'])) {
+        if (!empty($result['id_token'])) {
             $response->setIdToken($result['id_token']);
         }
-        if (isset($result['refresh_token'])) {
+        if (!empty($result['refresh_token'])) {
             $response->setRefreshToken($result['refresh_token']);
         }
 

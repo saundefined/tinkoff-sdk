@@ -42,30 +42,30 @@ class Tinkoff
         $accountCollection = new AccountCollection();
         foreach ($result as $item) {
             $account = new Account();
-            if (isset($item['accountNumber'])) {
+            if (!empty($item['accountNumber'])) {
                 $account->setAccountNumber($item['accountNumber']);
             }
-            if (isset($item['status'])) {
+            if (!empty($item['status'])) {
                 $account->setStatus($item['status']);
             }
-            if (isset($item['name'])) {
+            if (!empty($item['name'])) {
                 $account->setName($item['name']);
             }
-            if (isset($item['currency'])) {
+            if (!empty($item['currency'])) {
                 $account->setCurrency($item['currency']);
             }
 
             $balance = new Balance();
-            if (isset($item['balance']['otb'])) {
+            if (!empty($item['balance']['otb'])) {
                 $balance->setOtb($item['balance']['otb']);
             }
-            if (isset($item['balance']['authorized'])) {
+            if (!empty($item['balance']['authorized'])) {
                 $balance->setAuthorized($item['balance']['authorized']);
             }
-            if (isset($item['balance']['pendingPayments'])) {
+            if (!empty($item['balance']['pendingPayments'])) {
                 $balance->setPendingPayments($item['balance']['pendingPayments']);
             }
-            if (isset($item['balance']['pendingRequisitions'])) {
+            if (!empty($item['balance']['pendingRequisitions'])) {
                 $balance->setPendingRequisitions($item['balance']['pendingRequisitions']);
             }
 
@@ -169,12 +169,12 @@ class Tinkoff
         $account = $this->getAccounts()->getByAccountNumber($accountNumber);
 
         $options['accountNumber'] = $accountNumber;
-        if ($options['from'] instanceof \DateTime) {
+        if (!empty($options['from']) && $options['from'] instanceof \DateTime) {
             $options['from'] = $options['from']->format('Y-m-d\+H:i:s');
         } else {
             unset($options['from']);
         }
-        if ($options['till'] instanceof \DateTime) {
+        if (!empty($options['till']) && $options['till'] instanceof \DateTime) {
             $options['till'] = $options['till']->format('Y-m-d\+H:i:s');
         } else {
             unset($options['till']);
@@ -182,17 +182,17 @@ class Tinkoff
 
         $result = $this->query('excerpt', $options);
 
-        if (isset($result['saldoIn'])) {
+        if (!empty($result['saldoIn'])) {
             $account->setSaldoIn($result['saldoIn']);
         }
 
-        if (isset($result['saldoOut'])) {
+        if (!empty($result['saldoOut'])) {
             $account->setSaldoOut($result['saldoOut']);
         }
-        if (isset($result['income'])) {
+        if (!empty($result['income'])) {
             $account->setIncome($result['income']);
         }
-        if (isset($result['outcome'])) {
+        if (!empty($result['outcome'])) {
             $account->setOutcome($result['outcome']);
         }
 
@@ -200,97 +200,97 @@ class Tinkoff
         foreach ($result['operation'] as $item) {
             $operation = new Operation();
 
-            if (isset($item['id'])) {
+            if (!empty($item['id'])) {
                 $operation->setId($item['id']);
             }
-            if (isset($item['date'])) {
-                $operation->setDate(new \DateTime($item['date']));
+            if (!empty($item['date'])) {
+                $operation->setDate(\DateTime::createFromFormat('Y-m-d', $item['date']));
             }
-            if (isset($item['amount'])) {
+            if (!empty($item['amount'])) {
                 $operation->setAmount($item['amount']);
             }
-            if (isset($item['drawDate'])) {
-                $operation->setDrawDate(new \DateTime($item['drawDate']));
+            if (!empty($item['drawDate'])) {
+                $operation->setDrawDate(\DateTime::createFromFormat('Y-m-d', $item['drawDate']));
             }
-            if (isset($item['payerName'])) {
+            if (!empty($item['payerName'])) {
                 $operation->setPayerName($item['payerName']);
             }
-            if (isset($item['payerInn'])) {
+            if (!empty($item['payerInn'])) {
                 $operation->setPayerInn($item['payerInn']);
             }
-            if (isset($item['payerKpp'])) {
+            if (!empty($item['payerKpp'])) {
                 $operation->setPayerKpp($item['payerKpp']);
             }
-            if (isset($item['payerAccount'])) {
+            if (!empty($item['payerAccount'])) {
                 $operation->setPayerAccount($item['payerAccount']);
             }
-            if (isset($item['payerCorrAccount'])) {
+            if (!empty($item['payerCorrAccount'])) {
                 $operation->setPayerCorrAccount($item['payerCorrAccount']);
             }
-            if (isset($item['payerBic'])) {
+            if (!empty($item['payerBic'])) {
                 $operation->setPayerBic($item['payerBic']);
             }
-            if (isset($item['payerBank'])) {
+            if (!empty($item['payerBank'])) {
                 $operation->setPayerBank($item['payerBank']);
             }
-            if (isset($item['chargeDate'])) {
-                $operation->setChargeDate(new \DateTime($item['chargeDate']));
+            if (!empty($item['chargeDate'])) {
+                $operation->setChargeDate(\DateTime::createFromFormat('Y-m-d', $item['chargeDate']));
             }
-            if (isset($item['recipient'])) {
+            if (!empty($item['recipient'])) {
                 $operation->setRecipient($item['recipient']);
             }
-            if (isset($item['recipientInn'])) {
+            if (!empty($item['recipientInn'])) {
                 $operation->setRecipientInn($item['recipientInn']);
             }
-            if (isset($item['recipientKpp'])) {
+            if (!empty($item['recipientKpp'])) {
                 $operation->setRecipientKpp($item['recipientKpp']);
             }
-            if (isset($item['recipientAccount'])) {
+            if (!empty($item['recipientAccount'])) {
                 $operation->setRecipientAccount($item['recipientAccount']);
             }
-            if (isset($item['recipientCorrAccount'])) {
+            if (!empty($item['recipientCorrAccount'])) {
                 $operation->setRecipientCorrAccount($item['recipientCorrAccount']);
             }
-            if (isset($item['recipientBic'])) {
+            if (!empty($item['recipientBic'])) {
                 $operation->setRecipientBic($item['recipientBic']);
             }
-            if (isset($item['recipientBank'])) {
+            if (!empty($item['recipientBank'])) {
                 $operation->setRecipientBank($item['recipientBank']);
             }
-            if (isset($item['operationType'])) {
+            if (!empty($item['operationType'])) {
                 $operation->setOperationType($item['operationType']);
             }
-            if (isset($item['uin'])) {
+            if (!empty($item['uin'])) {
                 $operation->setUin($item['uin']);
             }
-            if (isset($item['paymentPurpose'])) {
+            if (!empty($item['paymentPurpose'])) {
                 $operation->setPaymentPurpose($item['paymentPurpose']);
             }
-            if (isset($item['creatorStatus'])) {
+            if (!empty($item['creatorStatus'])) {
                 $operation->setCreatorStatus($item['creatorStatus']);
             }
-            if (isset($item['kbk'])) {
+            if (!empty($item['kbk'])) {
                 $operation->setKbk($item['kbk']);
             }
-            if (isset($item['oktmo'])) {
+            if (!empty($item['oktmo'])) {
                 $operation->setOktmo($item['oktmo']);
             }
-            if (isset($item['taxEvidence'])) {
+            if (!empty($item['taxEvidence'])) {
                 $operation->setTaxEvidence($item['taxEvidence']);
             }
-            if (isset($item['taxPeriod'])) {
+            if (!empty($item['taxPeriod'])) {
                 $operation->setTaxPeriod($item['taxPeriod']);
             }
-            if (isset($item['taxDocNumber'])) {
+            if (!empty($item['taxDocNumber'])) {
                 $operation->setTaxDocNumber($item['taxDocNumber']);
             }
-            if (isset($item['taxDocDate'])) {
-                $operation->setTaxDocDate(new \DateTime($item['taxDocDate']));
+            if (!empty($item['taxDocDate'])) {
+                $operation->setTaxDocDate(\DateTime::createFromFormat('Y-m-d', $item['taxDocDate']));
             }
-            if (isset($item['taxType'])) {
+            if (!empty($item['taxType'])) {
                 $operation->setTaxType($item['taxType']);
             }
-            if (isset($item['executionOrder'])) {
+            if (!empty($item['executionOrder'])) {
                 $operation->setExecutionOrder($item['executionOrder']);
             }
 
