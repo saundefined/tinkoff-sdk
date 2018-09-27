@@ -213,7 +213,7 @@ class Account extends BaseModel
     /**
      * @return OperationCollection
      */
-    public function getOperations(): ?OperationCollection
+    public function getOperations(): OperationCollection
     {
         return $this->operations;
     }
