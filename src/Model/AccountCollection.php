@@ -7,19 +7,14 @@ use Tinkoff\Business\Exception\OutOfRangeException;
 
 class AccountCollection extends BaseCollection
 {
-    public function add(Account $accountItem): void
-    {
-        parent::add($accountItem);
-    }
-
     /**
      * @param string $accountNumber
      *
-     * @return Account
+     * @return \Tinkoff\Business\Base\BaseModel|Account
      *
      * @throws OutOfRangeException
      */
-    public function getByAccountNumber($accountNumber): Account
+    public function getByAccountNumber($accountNumber)
     {
         return $this->find(function ($account) use ($accountNumber) {
             /** @var Account $account */
