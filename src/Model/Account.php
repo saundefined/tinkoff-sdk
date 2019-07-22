@@ -2,9 +2,7 @@
 
 namespace Tinkoff\Business\Model;
 
-use Tinkoff\Business\Base\BaseModel;
-
-class Account extends BaseModel
+class Account
 {
     /**
      * Номер счета
@@ -36,35 +34,23 @@ class Account extends BaseModel
      */
     private $balance;
 
-    /**
-     * Начальный остаток
-     * @var float $saldoIn
-     */
-    private $saldoIn;
+    public static function createFromArray($data): ?Account
+    {
+        $model = new self();
+        $model->setAccountNumber($data['accountNumber'] ?? '');
+        $model->setStatus($data['status'] ?? '');
+        $model->setName($data['name'] ?? '');
+        $model->setCurrency($data['currency'] ?? 0);
 
-    /**
-     * Обороты входящих платежей
-     * @var float $income
-     */
-    private $income;
+        $balance = new Balance();
+        $balance->setOtb($data['balance']['otb'] ?? 0);
+        $balance->setAuthorized($data['balance']['authorized'] ?? 0);
+        $balance->setPendingPayments($data['balance']['pendingPayments'] ?? 0);
+        $balance->setPendingRequisitions($data['balance']['pendingRequisitions'] ?? 0);
+        $model->setBalance($balance);
 
-    /**
-     * Обороты исходящих платежей
-     * @var float $outcome
-     */
-    private $outcome;
-
-    /**
-     * Конечный остаток
-     * @var float $saldoOut
-     */
-    private $saldoOut;
-
-    /**
-     * Операции со счетом
-     * @var OperationCollection $operations
-     */
-    private $operations;
+        return $model;
+    }
 
     /**
      * @return string
@@ -145,85 +131,4 @@ class Account extends BaseModel
     {
         $this->balance = $balance;
     }
-
-    /**
-     * @return float
-     */
-    public function getSaldoIn(): ?float
-    {
-        return $this->saldoIn;
-    }
-
-    /**
-     * @param float $saldoIn
-     */
-    public function setSaldoIn(float $saldoIn): void
-    {
-        $this->saldoIn = $saldoIn;
-    }
-
-    /**
-     * @return float
-     */
-    public function getIncome(): ?float
-    {
-        return $this->income;
-    }
-
-    /**
-     * @param float $income
-     */
-    public function setIncome(float $income): void
-    {
-        $this->income = $income;
-    }
-
-    /**
-     * @return float
-     */
-    public function getOutcome(): ?float
-    {
-        return $this->outcome;
-    }
-
-    /**
-     * @param float $outcome
-     */
-    public function setOutcome(float $outcome): void
-    {
-        $this->outcome = $outcome;
-    }
-
-    /**
-     * @return float
-     */
-    public function getSaldoOut(): ?float
-    {
-        return $this->saldoOut;
-    }
-
-    /**
-     * @param float $saldoOut
-     */
-    public function setSaldoOut(float $saldoOut): void
-    {
-        $this->saldoOut = $saldoOut;
-    }
-
-    /**
-     * @return OperationCollection
-     */
-    public function getOperations(): OperationCollection
-    {
-        return $this->operations;
-    }
-
-    /**
-     * @param OperationCollection $operations
-     */
-    public function setOperations(OperationCollection $operations): void
-    {
-        $this->operations = $operations;
-    }
-
 }

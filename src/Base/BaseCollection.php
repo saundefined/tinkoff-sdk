@@ -3,6 +3,7 @@
 namespace Tinkoff\Business\Base;
 
 use Tinkoff\Business\Exception\OutOfRangeException;
+use function count;
 
 class BaseCollection
 {
@@ -13,19 +14,9 @@ class BaseCollection
 
     }
 
-    public function add(BaseModel $collectionItem): void
+    public function add($collectionItem): void
     {
         $this->collection[] = $collectionItem;
-    }
-
-    public function count(): int
-    {
-        return \count($this->getArray());
-    }
-
-    public function getArray(): array
-    {
-        return $this->collection;
     }
 
     public function clear(): void
@@ -33,24 +24,33 @@ class BaseCollection
         $this->collection = [];
     }
 
-    public function current(): BaseModel
+    public function current()
     {
         return current($this->collection);
     }
 
-    public function find(callable $condition): BaseModel
+    public function find(callable $condition)
     {
         for ($i = 0; $i < $this->count(); $i++) {
             if ($condition($this->at($i))) {
                 return $this->at($i);
-                break;
             }
         }
 
         throw new OutOfRangeException('Index out of bounds of collection');
     }
 
-    public function at($index): BaseModel
+    public function count(): int
+    {
+        return count($this->getArray());
+    }
+
+    public function getArray(): array
+    {
+        return $this->collection;
+    }
+
+    public function at($index)
     {
         if ($this->collection[$index]) {
             return $this->collection[$index];

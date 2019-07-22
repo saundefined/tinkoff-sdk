@@ -10,13 +10,13 @@ class AccountCollection extends BaseCollection
     /**
      * @param string $accountNumber
      *
-     * @return \Tinkoff\Business\Base\BaseModel|Account
+     * @return Account
      *
      * @throws OutOfRangeException
      */
-    public function getByAccountNumber($accountNumber)
+    public function getByAccountNumber($accountNumber): Account
     {
-        return $this->find(function ($account) use ($accountNumber) {
+        return $this->find(static function ($account) use ($accountNumber) {
             /** @var Account $account */
             return $account->getAccountNumber() === $accountNumber;
         });

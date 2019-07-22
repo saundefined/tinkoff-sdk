@@ -2,9 +2,7 @@
 
 namespace Tinkoff\Business\Model;
 
-use Tinkoff\Business\Base\BaseModel;
-
-class Balance extends BaseModel
+class Balance
 {
     /**
      * ОТВ счета

@@ -2,6 +2,8 @@
 
 namespace Tinkoff\Business\Model;
 
+use DateTime;
+
 class Payment
 {
     /**
@@ -13,7 +15,7 @@ class Payment
     /**
      * Дата и время исполнения платежа. Может быть в будущем, либо пустая. Если передана пустая дата, подписанный
      * документ будет принят к исполнению немедленно
-     * @var \DateTime $date
+     * @var DateTime $date
      */
     private $date;
 
@@ -115,7 +117,7 @@ class Payment
 
     /**
      * Поле платежки 109
-     * @var \DateTime $taxDocDate
+     * @var DateTime $taxDocDate
      */
     private $taxDocDate;
 
@@ -136,17 +138,17 @@ class Payment
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate(): ?\DateTime
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date): void
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
@@ -408,17 +410,17 @@ class Payment
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getTaxDocDate(): ?\DateTime
+    public function getTaxDocDate(): ?DateTime
     {
         return $this->taxDocDate;
     }
 
     /**
-     * @param \DateTime $taxDocDate
+     * @param DateTime $taxDocDate
      */
-    public function setTaxDocDate(\DateTime $taxDocDate): void
+    public function setTaxDocDate(DateTime $taxDocDate): void
     {
         $this->taxDocDate = $taxDocDate;
     }

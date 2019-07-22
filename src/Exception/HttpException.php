@@ -2,7 +2,9 @@
 
 namespace Tinkoff\Business\Exception;
 
-class HttpException extends \Exception
+use Exception;
+
+class HttpException extends Exception
 {
 
 }

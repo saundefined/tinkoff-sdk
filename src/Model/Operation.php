@@ -2,13 +2,9 @@
 
 namespace Tinkoff\Business\Model;
 
-use Tinkoff\Business\Base\BaseModel;
+use DateTime;
 
-/**
- * Class Operation
- * @package Tinkoff\Business\Model
- */
-class Operation extends BaseModel
+class Operation
 {
     /**
      * Номер документа
@@ -18,7 +14,7 @@ class Operation extends BaseModel
 
     /**
      * Дата документа
-     * @var \DateTime $date
+     * @var DateTime $date
      */
     private $date;
 
@@ -29,88 +25,28 @@ class Operation extends BaseModel
     private $amount;
 
     /**
-     * Расчетный счет плательщика
-     * @var string $payerAccount
+     * Плательщик
+     * @var Company $payer
      */
-    private $payerAccount;
+    private $payer;
 
     /**
      * Дата списания средств с р/с
-     * @var \DateTime $drawDate
+     * @var DateTime $drawDate
      */
     private $drawDate;
 
     /**
-     * Плательщик
-     * @var string $payerName
-     */
-    private $payerName;
-
-    /**
-     * ИНН плательщика
-     * @var string $payerInn
-     */
-    private $payerInn;
-
-    /**
-     * Кор. счет банка плательщика
-     * @var string $payerCorrAccount
-     */
-    private $payerCorrAccount;
-
-    /**
-     * Бик банка плательщика
-     * @var string $payerBic
-     */
-    private $payerBic;
-
-    /**
-     * Название банка плательщика
-     * @var string $payerBank
-     */
-    private $payerBank;
-
-    /**
-     * Расчетный счет получателя
-     * @var string $recipientAccount
-     */
-    private $recipientAccount;
-
-    /**
      * Дата поступления средств на р/с
-     * @var \DateTime $chargeDate
+     * @var DateTime $chargeDate
      */
     private $chargeDate;
 
     /**
      * Получатель
-     * @var string $recipient
+     * @var Company $recipient
      */
     private $recipient;
-
-    /**
-     * ИНН получателя
-     * @var string $recipientInn
-     */
-    private $recipientInn;
-
-    /**
-     * Расчетный счет получателя
-     * @var string $recipientCorrAccount
-     */
-    private $recipientCorrAccount;
-
-    /**
-     * Бик банка получателя
-     * @var string $recipientBic
-     */
-    private $recipientBic;
-
-    /**
-     * Название банка получателя
-     * @var string $recipientBank
-     */
-    private $recipientBank;
 
     /**
      * Вид платежа
@@ -143,18 +79,6 @@ class Operation extends BaseModel
     private $creatorStatus;
 
     /**
-     * КПП плательщика
-     * @var string $recipientKpp
-     */
-    private $recipientKpp;
-
-    /**
-     * КПП получателя
-     * @var string $payerKpp
-     */
-    private $payerKpp;
-
-    /**
      * Показатель кода бюджетной классификации
      * @var string $kbk
      */
@@ -167,40 +91,84 @@ class Operation extends BaseModel
     private $oktmo;
 
     /**
-     * Показатель основания налогового платежа
-     * @var string $taxEvidence
+     * Показатель налогового платежа
+     * @var Tax $tax
      */
-    private $taxEvidence;
-
-    /**
-     * Показатель налогового периода / Код таможенного органа
-     * @var string $taxPeriod
-     */
-    private $taxPeriod;
-
-    /**
-     * Показатель номера документа
-     * @var string $taxDocNumber
-     */
-    private $taxDocNumber;
-
-    /**
-     * Показатель даты документа
-     * @var \DateTime $taxDocDate
-     */
-    private $taxDocDate;
-
-    /**
-     * Показатель типа платежа
-     * @var string $taxType
-     */
-    private $taxType;
+    private $tax;
 
     /**
      * Очередность платежа
      * @var string $executionOrder
      */
     private $executionOrder;
+
+    public static function createFromArray($data): Operation
+    {
+        unset($data['drawDate']);
+
+        $model = new self();
+        $model->setId($data['id'] ?? '');
+        if (!empty($data['date'])) {
+            $model->setDate(new DateTime($data['date']));
+        }
+        $model->setAmount($data['amount'] ?? '');
+        if (!empty($data['drawDate'])) {
+            $model->setDrawDate(new DateTime($data['drawDate']));
+        }
+
+        $payer = new Company();
+        $payer->setName($data['payerName'] ?? '');
+        $payer->setInn($data['payerInn'] ?? '');
+        $payer->setKpp($data['payerKpp'] ?? '');
+
+        $payerBank = new Bank();
+        $payerBank->setAccountNumber($data['payerAccount'] ?? '');
+        $payerBank->setCorrAccount($data['payerCorrAccount'] ?? '');
+        $payerBank->setBic($data['payerBic'] ?? '');
+        $payerBank->setName($data['payerBank']);
+        $payer->setBank($payerBank);
+
+        $model->setPayer($payer);
+
+        $recipient = new Company();
+        $recipient->setName($data['recipient'] ?? '');
+        $recipient->setInn($data['recipientInn'] ?? '');
+        $recipient->setKpp($data['recipientKpp'] ?? '');
+
+        $recipientBank = new Bank();
+        $recipientBank->setAccountNumber($data['recipientAccount'] ?? '');
+        $recipientBank->setCorrAccount($data['recipientCorrAccount'] ?? '');
+        $recipientBank->setBic($data['recipientBic'] ?? '');
+        $recipientBank->setName($data['recipientBank'] ?? '');
+        $recipient->setBank($recipientBank);
+
+        $model->setRecipient($recipient);
+
+        if (!empty($data['chargeDate'])) {
+            $model->setChargeDate(new DateTime($data['chargeDate']));
+        }
+        $model->setPaymentType($data['paymentType'] ?? '');
+        $model->setOperationType($data['operationType'] ?? '');
+        $model->setUin($data['uin'] ?? '');
+        $model->setPaymentPurpose($data['paymentPurpose'] ?? '');
+        $model->setCreatorStatus($data['creatorStatus'] ?? '');
+        $model->setExecutionOrder($data['executionOrder'] ?? '');
+
+        $model->setKbk($data['kbk'] ?? '');
+        $model->setOktmo($data['oktmo'] ?? '');
+
+        $tax = new Tax();
+        $tax->setEvidence($data['taxEvidence'] ?? '');
+        $tax->setPeriod($data['taxPeriod'] ?? '');
+        $tax->setNumber($data['taxDocNumber'] ?? '');
+        if (!empty($data['taxDocDate'])) {
+            $tax->setDate(new DateTime($data['taxDocDate']));
+        }
+        $tax->setType($data['taxType'] ?? '');
+        $model->setTax($tax);
+
+        return $model;
+    }
 
     /**
      * @return int
@@ -219,17 +187,17 @@ class Operation extends BaseModel
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate(): ?\DateTime
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date): void
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
@@ -251,227 +219,67 @@ class Operation extends BaseModel
     }
 
     /**
-     * @return string
+     * @return Company
      */
-    public function getPayerAccount(): ?string
+    public function getPayer(): ?Company
     {
-        return $this->payerAccount;
+        return $this->payer;
     }
 
     /**
-     * @param string $payerAccount
+     * @param Company $payer
      */
-    public function setPayerAccount(string $payerAccount): void
+    public function setPayer(Company $payer): void
     {
-        $this->payerAccount = $payerAccount;
+        $this->payer = $payer;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDrawDate(): ?\DateTime
+    public function getDrawDate(): ?DateTime
     {
         return $this->drawDate;
     }
 
     /**
-     * @param \DateTime $drawDate
+     * @param DateTime $drawDate
      */
-    public function setDrawDate(\DateTime $drawDate): void
+    public function setDrawDate(DateTime $drawDate): void
     {
         $this->drawDate = $drawDate;
     }
 
     /**
-     * @return string
+     * @return Company
      */
-    public function getPayerName(): ?string
-    {
-        return $this->payerName;
-    }
-
-    /**
-     * @param string $payerName
-     */
-    public function setPayerName(string $payerName): void
-    {
-        $this->payerName = $payerName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPayerInn(): ?string
-    {
-        return $this->payerInn;
-    }
-
-    /**
-     * @param string $payerInn
-     */
-    public function setPayerInn(string $payerInn): void
-    {
-        $this->payerInn = $payerInn;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPayerCorrAccount(): ?string
-    {
-        return $this->payerCorrAccount;
-    }
-
-    /**
-     * @param string $payerCorrAccount
-     */
-    public function setPayerCorrAccount(string $payerCorrAccount): void
-    {
-        $this->payerCorrAccount = $payerCorrAccount;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPayerBic(): ?string
-    {
-        return $this->payerBic;
-    }
-
-    /**
-     * @param string $payerBic
-     */
-    public function setPayerBic(string $payerBic): void
-    {
-        $this->payerBic = $payerBic;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPayerBank(): ?string
-    {
-        return $this->payerBank;
-    }
-
-    /**
-     * @param string $payerBank
-     */
-    public function setPayerBank(string $payerBank): void
-    {
-        $this->payerBank = $payerBank;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRecipientAccount(): ?string
-    {
-        return $this->recipientAccount;
-    }
-
-    /**
-     * @param string $recipientAccount
-     */
-    public function setRecipientAccount(string $recipientAccount): void
-    {
-        $this->recipientAccount = $recipientAccount;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getChargeDate(): ?\DateTime
-    {
-        return $this->chargeDate;
-    }
-
-    /**
-     * @param \DateTime $chargeDate
-     */
-    public function setChargeDate(\DateTime $chargeDate): void
-    {
-        $this->chargeDate = $chargeDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRecipient(): ?string
+    public function getRecipient(): ?Company
     {
         return $this->recipient;
     }
 
     /**
-     * @param string $recipient
+     * @param Company $recipient
      */
-    public function setRecipient(string $recipient): void
+    public function setRecipient(Company $recipient): void
     {
         $this->recipient = $recipient;
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
-    public function getRecipientInn(): ?string
+    public function getChargeDate(): ?DateTime
     {
-        return $this->recipientInn;
+        return $this->chargeDate;
     }
 
     /**
-     * @param string $recipientInn
+     * @param DateTime $chargeDate
      */
-    public function setRecipientInn(string $recipientInn): void
+    public function setChargeDate(DateTime $chargeDate): void
     {
-        $this->recipientInn = $recipientInn;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRecipientCorrAccount(): ?string
-    {
-        return $this->recipientCorrAccount;
-    }
-
-    /**
-     * @param string $recipientCorrAccount
-     */
-    public function setRecipientCorrAccount(string $recipientCorrAccount): void
-    {
-        $this->recipientCorrAccount = $recipientCorrAccount;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRecipientBic(): ?string
-    {
-        return $this->recipientBic;
-    }
-
-    /**
-     * @param string $recipientBic
-     */
-    public function setRecipientBic(string $recipientBic): void
-    {
-        $this->recipientBic = $recipientBic;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRecipientBank(): ?string
-    {
-        return $this->recipientBank;
-    }
-
-    /**
-     * @param string $recipientBank
-     */
-    public function setRecipientBank(string $recipientBank): void
-    {
-        $this->recipientBank = $recipientBank;
+        $this->chargeDate = $chargeDate;
     }
 
     /**
@@ -557,38 +365,6 @@ class Operation extends BaseModel
     /**
      * @return string
      */
-    public function getRecipientKpp(): ?string
-    {
-        return $this->recipientKpp;
-    }
-
-    /**
-     * @param string $recipientKpp
-     */
-    public function setRecipientKpp(string $recipientKpp): void
-    {
-        $this->recipientKpp = $recipientKpp;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPayerKpp(): ?string
-    {
-        return $this->payerKpp;
-    }
-
-    /**
-     * @param string $payerKpp
-     */
-    public function setPayerKpp(string $payerKpp): void
-    {
-        $this->payerKpp = $payerKpp;
-    }
-
-    /**
-     * @return string
-     */
     public function getKbk(): ?string
     {
         return $this->kbk;
@@ -619,83 +395,19 @@ class Operation extends BaseModel
     }
 
     /**
-     * @return string
+     * @return Tax
      */
-    public function getTaxEvidence(): ?string
+    public function getTax(): ?Tax
     {
-        return $this->taxEvidence;
+        return $this->tax;
     }
 
     /**
-     * @param string $taxEvidence
+     * @param Tax $tax
      */
-    public function setTaxEvidence(string $taxEvidence): void
+    public function setTax(Tax $tax): void
     {
-        $this->taxEvidence = $taxEvidence;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTaxPeriod(): ?string
-    {
-        return $this->taxPeriod;
-    }
-
-    /**
-     * @param string $taxPeriod
-     */
-    public function setTaxPeriod(string $taxPeriod): void
-    {
-        $this->taxPeriod = $taxPeriod;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTaxDocNumber(): ?string
-    {
-        return $this->taxDocNumber;
-    }
-
-    /**
-     * @param string $taxDocNumber
-     */
-    public function setTaxDocNumber(string $taxDocNumber): void
-    {
-        $this->taxDocNumber = $taxDocNumber;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getTaxDocDate(): ?\DateTime
-    {
-        return $this->taxDocDate;
-    }
-
-    /**
-     * @param \DateTime $taxDocDate
-     */
-    public function setTaxDocDate(\DateTime $taxDocDate): void
-    {
-        $this->taxDocDate = $taxDocDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTaxType(): ?string
-    {
-        return $this->taxType;
-    }
-
-    /**
-     * @param string $taxType
-     */
-    public function setTaxType(string $taxType): void
-    {
-        $this->taxType = $taxType;
+        $this->tax = $tax;
     }
 
     /**
