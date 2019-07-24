@@ -1,30 +1,22 @@
-# Tinkoff Business SDK
+# Unofficial Tinkoff Business SDK
 
+[![CircleCI](https://circleci.com/gh/saundefined/tinkoff-sdk.svg?style=svg)](https://circleci.com/gh/saundefined/tinkoff-sdk)
+[![Latest Stable Version](https://poser.pugx.org/saundefined/tinkoff/v/stable)](https://packagist.org/packages/saundefined/tinkoff)
+[![Latest Unstable Version](https://poser.pugx.org/saundefined/tinkoff/v/unstable)](https://packagist.org/packages/saundefined/tinkoff)
+[![codecov](https://codecov.io/gh/saundefined/tinkoff-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/saundefined/tinkoff-sdk)
+[![Total Downloads](https://poser.pugx.org/saundefined/tinkoff/downloads)](https://packagist.org/packages/saundefined/tinkoff)
+[![License](https://poser.pugx.org/saundefined/tinkoff/license)](https://packagist.org/packages/saundefined/tinkoff)
+
+## Инициализация
+
+Логин и пароль можно получить в личном кабинете [Тинькофф Бизнес](https://business.tinkoff.ru/)
+
+## Получение токена
 ```php
 <?php
 
-use Tinkoff\Business\OAuth\Client;
-use Tinkoff\Business\Model\Payment;
-use Tinkoff\Business\Tinkoff;
-
-// Получение access_token
-$client = new Client('testclient', 'testpassword', 'https://my_tinkoff.ru');
-$authorizeUrl = $client->getAuthorizeUrl();
-$access_token = $client->withCode('122333')->getAccessToken();
-
-$tinkoff = new Tinkoff('account_inn');
-$tinkoff->setAccessToken($access_token);
-$accounts = $tinkoff->getAccounts();
-
-$reportList = $tinkoff->getAccount('40000000000000000000')->getOperations()->getArray();
-
-$payment = new Payment();
-$payment->setDocumentNumber('13');
-$payment->setAmount(100);
-$payment->setRecipientName('ООО Ромашка');
-$payment->setInn('76000000000');
-$payment->setKpp('7601001');
-$payment->setAccountNumber('40000000000000000000');
-
-$documentId = $tinkoff->sendPayment($payment);
+$client = new Tinkoff\Business\OAuth\Client('client_id', 'client_secret', 'refresh_token');
+$access_token = $client->renew()->getAccessToken();
 ```
+
+## Примеры

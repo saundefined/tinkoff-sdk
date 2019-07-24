@@ -27,7 +27,7 @@ class Company
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -43,7 +43,7 @@ class Company
     /**
      * @param string $inn
      */
-    public function setInn(string $inn): void
+    public function setInn(?string $inn): void
     {
         $this->inn = $inn;
     }
@@ -59,7 +59,7 @@ class Company
     /**
      * @param string $kpp
      */
-    public function setKpp(string $kpp): void
+    public function setKpp(?string $kpp): void
     {
         $this->kpp = $kpp;
     }
@@ -77,7 +77,7 @@ class Company
      *
      * @return void
      */
-    public function setBank(Bank $bank): void
+    public function setBank(?Bank $bank): void
     {
         $this->bank = $bank;
     }

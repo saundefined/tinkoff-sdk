@@ -11,7 +11,9 @@ use Tinkoff\Business\Model;
 class Client
 {
     private $inn;
+
     private $access_token;
+
     private $client;
 
     public function __construct($inn)
@@ -19,8 +21,7 @@ class Client
         $this->inn = $inn;
 
         $this->client = new GuzzleClient([
-            'base_uri' => 'https://openapi.tinkoff.ru/partner/company/' . $this->inn . '/',
-            'http_errors' => false,
+            'base_uri' => 'https://openapi.tinkoff.ru/partner/company/' . $this->inn . '/'
         ]);
     }
 
@@ -68,23 +69,20 @@ class Client
             throw new ArgumentException('Parameters inn and access_token are required');
         }
 
-        $client = new GuzzleClient([
-            'base_uri' => 'https://sme-partner.tinkoff.ru/api/v1/partner/company/' . $this->inn . '/'
-        ]);
-
         $data = [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->getAccessToken(),
                 'Content-Type' => 'application/json'
-            ]
+            ],
+            'http_errors' => false,
         ];
 
         if ($method === 'GET') {
             $data['query'] = $options;
-            $response = $client->get($command, $data);
+            $response = $this->client->get($command, $data);
         } else {
             $data['body'] = json_encode($options);
-            $response = $client->post($command, $data);
+            $response = $this->client->post($command, $data);
         }
 
         $result = json_decode($response->getBody()->getContents(), true);

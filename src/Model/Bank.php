@@ -27,7 +27,7 @@ class Bank
     /**
      * @param string $accountNumber
      */
-    public function setAccountNumber(string $accountNumber): void
+    public function setAccountNumber(?string $accountNumber): void
     {
         $this->accountNumber = $accountNumber;
     }
@@ -43,7 +43,7 @@ class Bank
     /**
      * @param string $corrAccount
      */
-    public function setCorrAccount(string $corrAccount): void
+    public function setCorrAccount(?string $corrAccount): void
     {
         $this->corrAccount = $corrAccount;
     }
@@ -59,7 +59,7 @@ class Bank
     /**
      * @param string $bic
      */
-    public function setBic(string $bic): void
+    public function setBic(?string $bic): void
     {
         $this->bic = $bic;
     }
@@ -75,7 +75,7 @@ class Bank
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }

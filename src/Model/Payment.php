@@ -132,7 +132,7 @@ class Payment
     /**
      * @param string $documentNumber
      */
-    public function setDocumentNumber(string $documentNumber): void
+    public function setDocumentNumber(?string $documentNumber): void
     {
         $this->documentNumber = $documentNumber;
     }
@@ -148,7 +148,7 @@ class Payment
     /**
      * @param DateTime $date
      */
-    public function setDate(DateTime $date): void
+    public function setDate(?DateTime $date): void
     {
         $this->date = $date;
     }
@@ -164,7 +164,7 @@ class Payment
     /**
      * @param float $amount
      */
-    public function setAmount(float $amount): void
+    public function setAmount(?float $amount): void
     {
         $this->amount = $amount;
     }
@@ -180,7 +180,7 @@ class Payment
     /**
      * @param string $recipientName
      */
-    public function setRecipientName(string $recipientName): void
+    public function setRecipientName(?string $recipientName): void
     {
         $this->recipientName = $recipientName;
     }
@@ -196,7 +196,7 @@ class Payment
     /**
      * @param string $inn
      */
-    public function setInn(string $inn): void
+    public function setInn(?string $inn): void
     {
         $this->inn = $inn;
     }
@@ -212,7 +212,7 @@ class Payment
     /**
      * @param string $kpp
      */
-    public function setKpp(string $kpp): void
+    public function setKpp(?string $kpp): void
     {
         $this->kpp = $kpp;
     }
@@ -228,7 +228,7 @@ class Payment
     /**
      * @param string $bankAcnt
      */
-    public function setBankAcnt(string $bankAcnt): void
+    public function setBankAcnt(?string $bankAcnt): void
     {
         $this->bankAcnt = $bankAcnt;
     }
@@ -244,7 +244,7 @@ class Payment
     /**
      * @param string $bankBik
      */
-    public function setBankBik(string $bankBik): void
+    public function setBankBik(?string $bankBik): void
     {
         $this->bankBik = $bankBik;
     }
@@ -260,7 +260,7 @@ class Payment
     /**
      * @param string $accountNumber
      */
-    public function setAccountNumber(string $accountNumber): void
+    public function setAccountNumber(?string $accountNumber): void
     {
         $this->accountNumber = $accountNumber;
     }
@@ -276,7 +276,7 @@ class Payment
     /**
      * @param string $paymentPurpose
      */
-    public function setPaymentPurpose(string $paymentPurpose): void
+    public function setPaymentPurpose(?string $paymentPurpose): void
     {
         $this->paymentPurpose = $paymentPurpose;
     }
@@ -292,7 +292,7 @@ class Payment
     /**
      * @param int $executionOrder
      */
-    public function setExecutionOrder(int $executionOrder): void
+    public function setExecutionOrder(?int $executionOrder): void
     {
         $this->executionOrder = $executionOrder;
     }
@@ -308,7 +308,7 @@ class Payment
     /**
      * @param string $taxPayerStatus
      */
-    public function setTaxPayerStatus(string $taxPayerStatus): void
+    public function setTaxPayerStatus(?string $taxPayerStatus): void
     {
         $this->taxPayerStatus = $taxPayerStatus;
     }
@@ -324,7 +324,7 @@ class Payment
     /**
      * @param string $kbk
      */
-    public function setKbk(string $kbk): void
+    public function setKbk(?string $kbk): void
     {
         $this->kbk = $kbk;
     }
@@ -340,7 +340,7 @@ class Payment
     /**
      * @param string $oktmo
      */
-    public function setOktmo(string $oktmo): void
+    public function setOktmo(?string $oktmo): void
     {
         $this->oktmo = $oktmo;
     }
@@ -356,7 +356,7 @@ class Payment
     /**
      * @param string $taxEvidence
      */
-    public function setTaxEvidence(string $taxEvidence): void
+    public function setTaxEvidence(?string $taxEvidence): void
     {
         $this->taxEvidence = $taxEvidence;
     }
@@ -372,7 +372,7 @@ class Payment
     /**
      * @param string $taxPeriod
      */
-    public function setTaxPeriod(string $taxPeriod): void
+    public function setTaxPeriod(?string $taxPeriod): void
     {
         $this->taxPeriod = $taxPeriod;
     }
@@ -388,7 +388,7 @@ class Payment
     /**
      * @param string $uin
      */
-    public function setUin(string $uin): void
+    public function setUin(?string $uin): void
     {
         $this->uin = $uin;
     }
@@ -404,7 +404,7 @@ class Payment
     /**
      * @param string $taxDocNumber
      */
-    public function setTaxDocNumber(string $taxDocNumber): void
+    public function setTaxDocNumber(?string $taxDocNumber): void
     {
         $this->taxDocNumber = $taxDocNumber;
     }
@@ -420,7 +420,7 @@ class Payment
     /**
      * @param DateTime $taxDocDate
      */
-    public function setTaxDocDate(DateTime $taxDocDate): void
+    public function setTaxDocDate(?DateTime $taxDocDate): void
     {
         $this->taxDocDate = $taxDocDate;
     }

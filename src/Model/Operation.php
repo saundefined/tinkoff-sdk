@@ -8,7 +8,7 @@ class Operation
 {
     /**
      * Номер документа
-     * @var int $id
+     * @var string $id
      */
     private $id;
 
@@ -107,81 +107,71 @@ class Operation
         unset($data['drawDate']);
 
         $model = new self();
-        $model->setId($data['id'] ?? '');
-        if (!empty($data['date'])) {
-            $model->setDate(new DateTime($data['date']));
-        }
-        $model->setAmount($data['amount'] ?? '');
-        if (!empty($data['drawDate'])) {
-            $model->setDrawDate(new DateTime($data['drawDate']));
-        }
+        $model->setId($data['id']);
+        $model->setDate(new DateTime($data['date']));
+        $model->setAmount($data['amount']);
+        $model->setDrawDate(new DateTime($data['drawDate']));
 
         $payer = new Company();
-        $payer->setName($data['payerName'] ?? '');
-        $payer->setInn($data['payerInn'] ?? '');
-        $payer->setKpp($data['payerKpp'] ?? '');
+        $payer->setName($data['payerName']);
+        $payer->setInn($data['payerInn']);
+        $payer->setKpp($data['payerKpp']);
 
         $payerBank = new Bank();
-        $payerBank->setAccountNumber($data['payerAccount'] ?? '');
-        $payerBank->setCorrAccount($data['payerCorrAccount'] ?? '');
-        $payerBank->setBic($data['payerBic'] ?? '');
+        $payerBank->setAccountNumber($data['payerAccount']);
+        $payerBank->setCorrAccount($data['payerCorrAccount']);
+        $payerBank->setBic($data['payerBic']);
         $payerBank->setName($data['payerBank']);
         $payer->setBank($payerBank);
-
         $model->setPayer($payer);
 
         $recipient = new Company();
-        $recipient->setName($data['recipient'] ?? '');
-        $recipient->setInn($data['recipientInn'] ?? '');
-        $recipient->setKpp($data['recipientKpp'] ?? '');
+        $recipient->setName($data['recipient']);
+        $recipient->setInn($data['recipientInn']);
+        $recipient->setKpp($data['recipientKpp']);
 
         $recipientBank = new Bank();
-        $recipientBank->setAccountNumber($data['recipientAccount'] ?? '');
-        $recipientBank->setCorrAccount($data['recipientCorrAccount'] ?? '');
-        $recipientBank->setBic($data['recipientBic'] ?? '');
-        $recipientBank->setName($data['recipientBank'] ?? '');
+        $recipientBank->setAccountNumber($data['recipientAccount']);
+        $recipientBank->setCorrAccount($data['recipientCorrAccount']);
+        $recipientBank->setBic($data['recipientBic']);
+        $recipientBank->setName($data['recipientBank']);
         $recipient->setBank($recipientBank);
-
         $model->setRecipient($recipient);
 
-        if (!empty($data['chargeDate'])) {
-            $model->setChargeDate(new DateTime($data['chargeDate']));
-        }
-        $model->setPaymentType($data['paymentType'] ?? '');
-        $model->setOperationType($data['operationType'] ?? '');
-        $model->setUin($data['uin'] ?? '');
-        $model->setPaymentPurpose($data['paymentPurpose'] ?? '');
-        $model->setCreatorStatus($data['creatorStatus'] ?? '');
-        $model->setExecutionOrder($data['executionOrder'] ?? '');
+        $model->setChargeDate(new DateTime($data['chargeDate']));
+        $model->setPaymentType($data['paymentType']);
+        $model->setOperationType($data['operationType']);
+        $model->setUin($data['uin']);
+        $model->setPaymentPurpose($data['paymentPurpose']);
+        $model->setCreatorStatus($data['creatorStatus']);
+        $model->setExecutionOrder($data['executionOrder']);
 
-        $model->setKbk($data['kbk'] ?? '');
-        $model->setOktmo($data['oktmo'] ?? '');
+        $model->setKbk($data['kbk']);
+        $model->setOktmo($data['oktmo']);
 
         $tax = new Tax();
-        $tax->setEvidence($data['taxEvidence'] ?? '');
-        $tax->setPeriod($data['taxPeriod'] ?? '');
-        $tax->setNumber($data['taxDocNumber'] ?? '');
-        if (!empty($data['taxDocDate'])) {
-            $tax->setDate(new DateTime($data['taxDocDate']));
-        }
-        $tax->setType($data['taxType'] ?? '');
+        $tax->setEvidence($data['taxEvidence']);
+        $tax->setPeriod($data['taxPeriod']);
+        $tax->setNumber($data['taxDocNumber']);
+        $tax->setDate(new DateTime($data['taxDocDate']));
+        $tax->setType($data['taxType']);
         $model->setTax($tax);
 
         return $model;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
-    public function setId(int $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
@@ -197,7 +187,7 @@ class Operation
     /**
      * @param DateTime $date
      */
-    public function setDate(DateTime $date): void
+    public function setDate(?DateTime $date): void
     {
         $this->date = $date;
     }
@@ -213,7 +203,7 @@ class Operation
     /**
      * @param float $amount
      */
-    public function setAmount(float $amount): void
+    public function setAmount(?float $amount): void
     {
         $this->amount = $amount;
     }
@@ -229,7 +219,7 @@ class Operation
     /**
      * @param Company $payer
      */
-    public function setPayer(Company $payer): void
+    public function setPayer(?Company $payer): void
     {
         $this->payer = $payer;
     }
@@ -245,7 +235,7 @@ class Operation
     /**
      * @param DateTime $drawDate
      */
-    public function setDrawDate(DateTime $drawDate): void
+    public function setDrawDate(?DateTime $drawDate): void
     {
         $this->drawDate = $drawDate;
     }
@@ -261,7 +251,7 @@ class Operation
     /**
      * @param Company $recipient
      */
-    public function setRecipient(Company $recipient): void
+    public function setRecipient(?Company $recipient): void
     {
         $this->recipient = $recipient;
     }
@@ -277,7 +267,7 @@ class Operation
     /**
      * @param DateTime $chargeDate
      */
-    public function setChargeDate(DateTime $chargeDate): void
+    public function setChargeDate(?DateTime $chargeDate): void
     {
         $this->chargeDate = $chargeDate;
     }
@@ -293,7 +283,7 @@ class Operation
     /**
      * @param string $paymentType
      */
-    public function setPaymentType(string $paymentType): void
+    public function setPaymentType(?string $paymentType): void
     {
         $this->paymentType = $paymentType;
     }
@@ -309,7 +299,7 @@ class Operation
     /**
      * @param string $operationType
      */
-    public function setOperationType(string $operationType): void
+    public function setOperationType(?string $operationType): void
     {
         $this->operationType = $operationType;
     }
@@ -325,7 +315,7 @@ class Operation
     /**
      * @param string $uin
      */
-    public function setUin(string $uin): void
+    public function setUin(?string $uin): void
     {
         $this->uin = $uin;
     }
@@ -341,7 +331,7 @@ class Operation
     /**
      * @param string $paymentPurpose
      */
-    public function setPaymentPurpose(string $paymentPurpose): void
+    public function setPaymentPurpose(?string $paymentPurpose): void
     {
         $this->paymentPurpose = $paymentPurpose;
     }
@@ -357,7 +347,7 @@ class Operation
     /**
      * @param string $creatorStatus
      */
-    public function setCreatorStatus(string $creatorStatus): void
+    public function setCreatorStatus(?string $creatorStatus): void
     {
         $this->creatorStatus = $creatorStatus;
     }
@@ -373,7 +363,7 @@ class Operation
     /**
      * @param string $kbk
      */
-    public function setKbk(string $kbk): void
+    public function setKbk(?string $kbk): void
     {
         $this->kbk = $kbk;
     }
@@ -389,7 +379,7 @@ class Operation
     /**
      * @param string $oktmo
      */
-    public function setOktmo(string $oktmo): void
+    public function setOktmo(?string $oktmo): void
     {
         $this->oktmo = $oktmo;
     }
@@ -405,7 +395,7 @@ class Operation
     /**
      * @param Tax $tax
      */
-    public function setTax(Tax $tax): void
+    public function setTax(?Tax $tax): void
     {
         $this->tax = $tax;
     }
@@ -421,7 +411,7 @@ class Operation
     /**
      * @param string $executionOrder
      */
-    public function setExecutionOrder(string $executionOrder): void
+    public function setExecutionOrder(?string $executionOrder): void
     {
         $this->executionOrder = $executionOrder;
     }

@@ -37,16 +37,16 @@ class Account
     public static function createFromArray($data): ?Account
     {
         $model = new self();
-        $model->setAccountNumber($data['accountNumber'] ?? '');
-        $model->setStatus($data['status'] ?? '');
-        $model->setName($data['name'] ?? '');
-        $model->setCurrency($data['currency'] ?? 0);
+        $model->setAccountNumber($data['accountNumber']);
+        $model->setStatus($data['status']);
+        $model->setName($data['name']);
+        $model->setCurrency($data['currency']);
 
         $balance = new Balance();
-        $balance->setOtb($data['balance']['otb'] ?? 0);
-        $balance->setAuthorized($data['balance']['authorized'] ?? 0);
-        $balance->setPendingPayments($data['balance']['pendingPayments'] ?? 0);
-        $balance->setPendingRequisitions($data['balance']['pendingRequisitions'] ?? 0);
+        $balance->setOtb($data['balance']['otb']);
+        $balance->setAuthorized($data['balance']['authorized']);
+        $balance->setPendingPayments($data['balance']['pendingPayments']);
+        $balance->setPendingRequisitions($data['balance']['pendingRequisitions']);
         $model->setBalance($balance);
 
         return $model;
@@ -63,7 +63,7 @@ class Account
     /**
      * @param string $accountNumber
      */
-    public function setAccountNumber(string $accountNumber): void
+    public function setAccountNumber(?string $accountNumber): void
     {
         $this->accountNumber = $accountNumber;
     }
@@ -79,7 +79,7 @@ class Account
     /**
      * @param string $status
      */
-    public function setStatus(string $status): void
+    public function setStatus(?string $status): void
     {
         $this->status = $status;
     }
@@ -95,7 +95,7 @@ class Account
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -111,7 +111,7 @@ class Account
     /**
      * @param int $currency
      */
-    public function setCurrency(int $currency): void
+    public function setCurrency(?int $currency): void
     {
         $this->currency = $currency;
     }
@@ -127,7 +127,7 @@ class Account
     /**
      * @param Balance $balance
      */
-    public function setBalance(Balance $balance): void
+    public function setBalance(?Balance $balance): void
     {
         $this->balance = $balance;
     }

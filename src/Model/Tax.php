@@ -47,7 +47,7 @@ class Tax
     /**
      * @param string $evidence
      */
-    public function setEvidence(string $evidence): void
+    public function setEvidence(?string $evidence): void
     {
         $this->evidence = $evidence;
     }
@@ -63,7 +63,7 @@ class Tax
     /**
      * @param string $period
      */
-    public function setPeriod(string $period): void
+    public function setPeriod(?string $period): void
     {
         $this->period = $period;
     }
@@ -79,7 +79,7 @@ class Tax
     /**
      * @param string $number
      */
-    public function setNumber(string $number): void
+    public function setNumber(?string $number): void
     {
         $this->number = $number;
     }
@@ -95,7 +95,7 @@ class Tax
     /**
      * @param DateTime $date
      */
-    public function setDate(DateTime $date): void
+    public function setDate(?DateTime $date): void
     {
         $this->date = $date;
     }
@@ -111,7 +111,7 @@ class Tax
     /**
      * @param string $type
      */
-    public function setType(string $type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }

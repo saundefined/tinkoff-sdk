@@ -22,7 +22,7 @@ class OAuthResponse
     /**
      * @var string
      */
-    private $idToken;
+    private $sessionId;
 
     /**
      * @var string
@@ -40,7 +40,7 @@ class OAuthResponse
     /**
      * @param string $accessToken
      */
-    public function setAccessToken(string $accessToken): void
+    public function setAccessToken(?string $accessToken): void
     {
         $this->accessToken = $accessToken;
     }
@@ -56,7 +56,7 @@ class OAuthResponse
     /**
      * @param string $tokenType
      */
-    public function setTokenType(string $tokenType): void
+    public function setTokenType(?string $tokenType): void
     {
         $this->tokenType = $tokenType;
     }
@@ -72,7 +72,7 @@ class OAuthResponse
     /**
      * @param int $expiresIn
      */
-    public function setExpiresIn(int $expiresIn): void
+    public function setExpiresIn(?int $expiresIn): void
     {
         $this->expiresIn = $expiresIn;
     }
@@ -80,17 +80,17 @@ class OAuthResponse
     /**
      * @return string
      */
-    public function getIdToken(): ?string
+    public function getSessionId(): ?string
     {
-        return $this->idToken;
+        return $this->sessionId;
     }
 
     /**
-     * @param string $idToken
+     * @param string $sessionId
      */
-    public function setIdToken(string $idToken): void
+    public function setSessionId(?string $sessionId): void
     {
-        $this->idToken = $idToken;
+        $this->sessionId = $sessionId;
     }
 
     /**
@@ -104,7 +104,7 @@ class OAuthResponse
     /**
      * @param string $refreshToken
      */
-    public function setRefreshToken(string $refreshToken): void
+    public function setRefreshToken(?string $refreshToken): void
     {
         $this->refreshToken = $refreshToken;
     }
