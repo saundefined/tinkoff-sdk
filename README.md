@@ -20,3 +20,63 @@ $access_token = $client->renew()->getAccessToken();
 ```
 
 ## Примеры
+
+## Получение счетов пользователя
+
+```php
+<?php
+
+$client = new Tinkoff\Business\Client('760000000000');
+$client->setAccessToken('access_token');
+    
+$accounts = $client->accounts()->get();
+$account = $accounts->current();
+```
+
+## Получение выписки по счету
+
+```php
+<?php
+
+$client = new Tinkoff\Business\Client('760000000000');
+$client->setAccessToken('access_token');
+
+$accounts = $client->accounts()->get();
+$account = $accounts->current();
+    
+$operations= $client->operations($account)->get();
+```
+
+## Создание платежного поручения
+
+```php
+<?php
+
+$client = new Tinkoff\Business\Client('760000000000');
+$client->setAccessToken('access_token');
+
+$accounts = $client->accounts()->get();
+$account = $accounts->current();
+    
+$payment = new Tinkoff\Business\Model\Payment();
+$payment->setDocumentNumber('1');
+$payment->setDate(new DateTime());
+$payment->setAmount(100.0);
+
+$recipient = new Tinkoff\Business\Model\Company();
+$recipient->setName('ООО Ромашка');
+$recipient->setInn('760000000000');
+$recipient->setKpp('770000000');
+
+$bank = new Tinkoff\Business\Model\Bank();
+$bank->setAccountNumber('40101810900000000974');
+$bank->setName('АО "ТИНЬКОФФ БАНК"');
+$bank->setBic('044525974');
+$recipient->setBank($bank);
+
+$payment->setRecipient($recipient);
+$payment->setPaymentPurpose('Тестовый платеж');
+$payment->setExecutionOrder(5);
+    
+$document = $client->payment($account, $payment)->send();
+```

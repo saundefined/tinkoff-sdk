@@ -21,7 +21,7 @@ class Client
         $this->inn = $inn;
 
         $this->client = new GuzzleClient([
-            'base_uri' => 'https://openapi.tinkoff.ru/partner/company/' . $this->inn . '/'
+            'base_uri' => 'https://openapi.tinkoff.ru/sme/api/v1/partner/company/' . $this->inn . '/'
         ]);
     }
 
@@ -53,13 +53,14 @@ class Client
 
     /**
      * Отправка платежного поручения
+     * @param Model\Account $account
      * @param Model\Payment $payment
      *
      * @return Payment
      */
-    public function payment(Model\Payment $payment): Payment
+    public function payment(Model\Account $account, Model\Payment $payment): Payment
     {
-        return new Payment($this, $payment);
+        return new Payment($this, $account, $payment);
     }
 
     /**
@@ -98,12 +99,12 @@ class Client
 
         $result = json_decode($response->getBody()->getContents(), true);
 
-        if ($response->getStatusCode() !== 200) {
-            throw new HttpException('Api response status code is not 200');
+        if (isset($result['errorText'], $result['errorCode'])) {
+            throw new ApiException('[' . $result['errorCode'] . '] ' . $result['errorText']);
         }
 
         if (isset($result['errorMessage'], $result['errorCode'])) {
-            throw new ApiException('[' . $result['errorCode'] . '] ' . $result['errorMessage']);
+            throw new HttpException('[' . $result['errorCode'] . '] ' . $result['errorMessage']);
         }
 
         return $result;

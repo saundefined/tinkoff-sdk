@@ -7,6 +7,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Tinkoff\Business\Model\Account;
 use Tinkoff\Business\Model\Bank;
 use Tinkoff\Business\Model\Company;
 use Tinkoff\Business\Model\Payment;
@@ -19,15 +20,15 @@ final class PaymentTest extends TestCase
     public function testShouldReturnSuccessResponse(): void
     {
         $client = $this->createClient([
-            'requestId' => 'cfb84baf-cd67-4b9a-8c1f-574a1cad8dde',
-            'result' => 'OK',
+            'documentId' => 'ea0b025e-147a-47c8-90db-c31e355ffce7'
         ]);
 
-        $response = $client->payment($this->payment)->send();
+        $account = new Account();
+        $account->setAccountNumber('40101810900000000974');
 
-        $this->assertSame('cfb84baf-cd67-4b9a-8c1f-574a1cad8dde', $response->getRequestId());
-        $this->assertSame('OK', $response->getResult());
-        $this->assertTrue($response->isSuccess());
+        $response = $client->payment($account, $this->payment)->send();
+
+        $this->assertSame('ea0b025e-147a-47c8-90db-c31e355ffce7', $response->getId());
     }
 
     private function createClient($data = []): \Tinkoff\Business\Client
@@ -42,20 +43,6 @@ final class PaymentTest extends TestCase
         $client->setAccessToken('MZlKw2FjKp3i1sD4hs2CxEeqzmfBdFEHSDQbFcYQoz7DLoBZyiYDFQ4JoTPs5jnZfL7O0JpLQRUWeNK1lFxH9Y');
 
         return $client;
-    }
-
-    public function testShouldReturnFailResponse(): void
-    {
-        $client = $this->createClient([
-            'requestId' => 'cfb84baf-cd67-4b9a-8c1f-574a1cad8dde',
-            'result' => 'FAIL',
-        ]);
-
-        $response = $client->payment($this->payment)->send();
-
-        $this->assertSame('cfb84baf-cd67-4b9a-8c1f-574a1cad8dde', $response->getRequestId());
-        $this->assertSame('FAIL', $response->getResult());
-        $this->assertFalse($response->isSuccess());
     }
 
     protected function setUp(): void

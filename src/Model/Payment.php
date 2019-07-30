@@ -27,7 +27,7 @@ class Payment
 
     /**
      * Получатель
-     * @var Company $recipien
+     * @var Company $recipient
      */
     private $recipient;
 

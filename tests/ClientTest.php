@@ -80,7 +80,7 @@ final class ClientTest extends TestCase
     public function testShouldReturnApiErrorException(): void
     {
         $client = $this->createClient([
-            'errorMessage' => 'Непредвиденная ошибка. Пожалуйста, попробуйте позже.',
+            'errorText' => 'Непредвиденная ошибка. Пожалуйста, попробуйте позже.',
             'errorCode' => 'INTERNAL_ERROR',
             'success' => false
         ]);
