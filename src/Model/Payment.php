@@ -2,6 +2,8 @@
 
 namespace Tinkoff\Business\Model;
 
+use DateTime;
+
 class Payment
 {
     /**
@@ -13,7 +15,7 @@ class Payment
     /**
      * Дата и время исполнения платежа. Может быть в будущем, либо пустая. Если передана пустая дата, подписанный
      * документ будет принят к исполнению немедленно
-     * @var \DateTime $date
+     * @var DateTime $date
      */
     private $date;
 
@@ -24,40 +26,10 @@ class Payment
     private $amount;
 
     /**
-     * Наименование получателя
-     * @var string $recipientName
+     * Получатель
+     * @var Company $recipient
      */
-    private $recipientName;
-
-    /**
-     * ИНН получателя
-     * @var string $inn
-     */
-    private $inn;
-
-    /**
-     * КПП получателя
-     * @var string $kpp
-     */
-    private $kpp;
-
-    /**
-     * Счет получателя
-     * @var string $bankAcnt
-     */
-    private $bankAcnt;
-
-    /**
-     * БИК банка
-     * @var string $bankBik
-     */
-    private $bankBik;
-
-    /**
-     * Счет плательщика
-     * @var string $accountNumber
-     */
-    private $accountNumber;
+    private $recipient;
 
     /**
      * Назначение платежа
@@ -72,10 +44,10 @@ class Payment
     private $executionOrder;
 
     /**
-     * Поле платежки 101
-     * @var string $taxPayerStatus
+     * Показатель налогового платежа
+     * @var Tax $tax
      */
-    private $taxPayerStatus;
+    private $tax;
 
     /**
      * Поле платежки 104
@@ -90,34 +62,10 @@ class Payment
     private $oktmo;
 
     /**
-     * Поле 106
-     * @var string $taxEvidence
-     */
-    private $taxEvidence;
-
-    /**
-     * Поле 107
-     * @var string $taxPeriod
-     */
-    private $taxPeriod;
-
-    /**
      * Код УИН
      * @var string $uin
      */
     private $uin;
-
-    /**
-     * Поле платежки 108
-     * @var string $taxDocNumber
-     */
-    private $taxDocNumber;
-
-    /**
-     * Поле платежки 109
-     * @var \DateTime $taxDocDate
-     */
-    private $taxDocDate;
 
     /**
      * @return string
@@ -130,23 +78,23 @@ class Payment
     /**
      * @param string $documentNumber
      */
-    public function setDocumentNumber(string $documentNumber): void
+    public function setDocumentNumber(?string $documentNumber): void
     {
         $this->documentNumber = $documentNumber;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate(): ?\DateTime
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date): void
+    public function setDate(?DateTime $date): void
     {
         $this->date = $date;
     }
@@ -162,105 +110,25 @@ class Payment
     /**
      * @param float $amount
      */
-    public function setAmount(float $amount): void
+    public function setAmount(?float $amount): void
     {
         $this->amount = $amount;
     }
 
     /**
-     * @return string
+     * @return Company
      */
-    public function getRecipientName(): ?string
+    public function getRecipient(): ?Company
     {
-        return $this->recipientName;
+        return $this->recipient;
     }
 
     /**
-     * @param string $recipientName
+     * @param Company $recipient
      */
-    public function setRecipientName(string $recipientName): void
+    public function setRecipient(?Company $recipient): void
     {
-        $this->recipientName = $recipientName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getInn(): ?string
-    {
-        return $this->inn;
-    }
-
-    /**
-     * @param string $inn
-     */
-    public function setInn(string $inn): void
-    {
-        $this->inn = $inn;
-    }
-
-    /**
-     * @return string
-     */
-    public function getKpp(): ?string
-    {
-        return $this->kpp;
-    }
-
-    /**
-     * @param string $kpp
-     */
-    public function setKpp(string $kpp): void
-    {
-        $this->kpp = $kpp;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBankAcnt(): ?string
-    {
-        return $this->bankAcnt;
-    }
-
-    /**
-     * @param string $bankAcnt
-     */
-    public function setBankAcnt(string $bankAcnt): void
-    {
-        $this->bankAcnt = $bankAcnt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBankBik(): ?string
-    {
-        return $this->bankBik;
-    }
-
-    /**
-     * @param string $bankBik
-     */
-    public function setBankBik(string $bankBik): void
-    {
-        $this->bankBik = $bankBik;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAccountNumber(): ?string
-    {
-        return $this->accountNumber;
-    }
-
-    /**
-     * @param string $accountNumber
-     */
-    public function setAccountNumber(string $accountNumber): void
-    {
-        $this->accountNumber = $accountNumber;
+        $this->recipient = $recipient;
     }
 
     /**
@@ -274,7 +142,7 @@ class Payment
     /**
      * @param string $paymentPurpose
      */
-    public function setPaymentPurpose(string $paymentPurpose): void
+    public function setPaymentPurpose(?string $paymentPurpose): void
     {
         $this->paymentPurpose = $paymentPurpose;
     }
@@ -290,25 +158,9 @@ class Payment
     /**
      * @param int $executionOrder
      */
-    public function setExecutionOrder(int $executionOrder): void
+    public function setExecutionOrder(?int $executionOrder): void
     {
         $this->executionOrder = $executionOrder;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTaxPayerStatus(): ?string
-    {
-        return $this->taxPayerStatus;
-    }
-
-    /**
-     * @param string $taxPayerStatus
-     */
-    public function setTaxPayerStatus(string $taxPayerStatus): void
-    {
-        $this->taxPayerStatus = $taxPayerStatus;
     }
 
     /**
@@ -322,7 +174,7 @@ class Payment
     /**
      * @param string $kbk
      */
-    public function setKbk(string $kbk): void
+    public function setKbk(?string $kbk): void
     {
         $this->kbk = $kbk;
     }
@@ -338,41 +190,25 @@ class Payment
     /**
      * @param string $oktmo
      */
-    public function setOktmo(string $oktmo): void
+    public function setOktmo(?string $oktmo): void
     {
         $this->oktmo = $oktmo;
     }
 
     /**
-     * @return string
+     * @return Tax
      */
-    public function getTaxEvidence(): ?string
+    public function getTax(): ?Tax
     {
-        return $this->taxEvidence;
+        return $this->tax;
     }
 
     /**
-     * @param string $taxEvidence
+     * @param Tax $tax
      */
-    public function setTaxEvidence(string $taxEvidence): void
+    public function setTax(?Tax $tax): void
     {
-        $this->taxEvidence = $taxEvidence;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTaxPeriod(): ?string
-    {
-        return $this->taxPeriod;
-    }
-
-    /**
-     * @param string $taxPeriod
-     */
-    public function setTaxPeriod(string $taxPeriod): void
-    {
-        $this->taxPeriod = $taxPeriod;
+        $this->tax = $tax;
     }
 
     /**
@@ -386,40 +222,8 @@ class Payment
     /**
      * @param string $uin
      */
-    public function setUin(string $uin): void
+    public function setUin(?string $uin): void
     {
         $this->uin = $uin;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTaxDocNumber(): ?string
-    {
-        return $this->taxDocNumber;
-    }
-
-    /**
-     * @param string $taxDocNumber
-     */
-    public function setTaxDocNumber(string $taxDocNumber): void
-    {
-        $this->taxDocNumber = $taxDocNumber;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getTaxDocDate(): ?\DateTime
-    {
-        return $this->taxDocDate;
-    }
-
-    /**
-     * @param \DateTime $taxDocDate
-     */
-    public function setTaxDocDate(\DateTime $taxDocDate): void
-    {
-        $this->taxDocDate = $taxDocDate;
     }
 }

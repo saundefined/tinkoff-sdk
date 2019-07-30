@@ -2,9 +2,7 @@
 
 namespace Tinkoff\Business\Model;
 
-use Tinkoff\Business\Base\BaseModel;
-
-class Balance extends BaseModel
+class Balance
 {
     /**
      * ОТВ счета
@@ -41,7 +39,7 @@ class Balance extends BaseModel
     /**
      * @param float $otb
      */
-    public function setOtb(float $otb): void
+    public function setOtb(?float $otb): void
     {
         $this->otb = $otb;
     }
@@ -57,7 +55,7 @@ class Balance extends BaseModel
     /**
      * @param float $authorized
      */
-    public function setAuthorized(float $authorized): void
+    public function setAuthorized(?float $authorized): void
     {
         $this->authorized = $authorized;
     }
@@ -73,7 +71,7 @@ class Balance extends BaseModel
     /**
      * @param float $pendingPayments
      */
-    public function setPendingPayments(float $pendingPayments): void
+    public function setPendingPayments(?float $pendingPayments): void
     {
         $this->pendingPayments = $pendingPayments;
     }
@@ -89,7 +87,7 @@ class Balance extends BaseModel
     /**
      * @param float $pendingRequisitions
      */
-    public function setPendingRequisitions(float $pendingRequisitions): void
+    public function setPendingRequisitions(?float $pendingRequisitions): void
     {
         $this->pendingRequisitions = $pendingRequisitions;
     }

@@ -2,112 +2,110 @@
 
 namespace Tinkoff\Business\Model;
 
-use Tinkoff\Business\Base\BaseModel;
-
-class OAuthResponse extends BaseModel
+class OAuthResponse
 {
     /**
      * @var string
      */
-    private $access_token;
+    private $accessToken;
 
     /**
      * @var string
      */
-    private $token_type;
+    private $tokenType;
 
     /**
      * @var int
      */
-    private $expires_in;
+    private $expiresIn;
 
     /**
      * @var string
      */
-    private $id_token;
+    private $sessionId;
 
     /**
      * @var string
      */
-    private $refresh_token;
+    private $refreshToken;
 
     /**
      * @return string
      */
-    public function getAccessToken(): string
+    public function getAccessToken(): ?string
     {
-        return $this->access_token;
+        return $this->accessToken;
     }
 
     /**
-     * @param string $access_token
+     * @param string $accessToken
      */
-    public function setAccessToken(string $access_token): void
+    public function setAccessToken(?string $accessToken): void
     {
-        $this->access_token = $access_token;
+        $this->accessToken = $accessToken;
     }
 
     /**
      * @return string
      */
-    public function getTokenType(): string
+    public function getTokenType(): ?string
     {
-        return $this->token_type;
+        return $this->tokenType;
     }
 
     /**
-     * @param string $token_type
+     * @param string $tokenType
      */
-    public function setTokenType(string $token_type): void
+    public function setTokenType(?string $tokenType): void
     {
-        $this->token_type = $token_type;
+        $this->tokenType = $tokenType;
     }
 
     /**
      * @return int
      */
-    public function getExpiresIn(): int
+    public function getExpiresIn(): ?int
     {
-        return $this->expires_in;
+        return $this->expiresIn;
     }
 
     /**
-     * @param int $expires_in
+     * @param int $expiresIn
      */
-    public function setExpiresIn(int $expires_in): void
+    public function setExpiresIn(?int $expiresIn): void
     {
-        $this->expires_in = $expires_in;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdToken(): string
-    {
-        return $this->id_token;
-    }
-
-    /**
-     * @param string $id_token
-     */
-    public function setIdToken(string $id_token): void
-    {
-        $this->id_token = $id_token;
+        $this->expiresIn = $expiresIn;
     }
 
     /**
      * @return string
      */
-    public function getRefreshToken(): string
+    public function getSessionId(): ?string
     {
-        return $this->refresh_token;
+        return $this->sessionId;
     }
 
     /**
-     * @param string $refresh_token
+     * @param string $sessionId
      */
-    public function setRefreshToken(string $refresh_token): void
+    public function setSessionId(?string $sessionId): void
     {
-        $this->refresh_token = $refresh_token;
+        $this->sessionId = $sessionId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRefreshToken(): ?string
+    {
+        return $this->refreshToken;
+    }
+
+    /**
+     * @param string $refreshToken
+     */
+    public function setRefreshToken(?string $refreshToken): void
+    {
+        $this->refreshToken = $refreshToken;
     }
 }

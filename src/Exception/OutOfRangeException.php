@@ -2,7 +2,9 @@
 
 namespace Tinkoff\Business\Exception;
 
-class OutOfRangeException extends \Exception
+use Exception;
+
+class OutOfRangeException extends Exception
 {
 
 }

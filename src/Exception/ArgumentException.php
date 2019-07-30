@@ -2,7 +2,9 @@
 
 namespace Tinkoff\Business\Exception;
 
-class ArgumentException extends \Exception
+use Exception;
+
+class ArgumentException extends Exception
 {
 
 }
