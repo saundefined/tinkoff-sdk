@@ -37,6 +37,12 @@ class Tax
     private $type;
 
     /**
+     * Статус плательщика
+     * @var string $payerStatus
+     */
+    private $payerStatus;
+
+    /**
      * @return string
      */
     public function getEvidence(): ?string
@@ -114,6 +120,22 @@ class Tax
     public function setType(?string $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPayerStatus(): ?string
+    {
+        return $this->payerStatus;
+    }
+
+    /**
+     * @param string $payerStatus
+     */
+    public function setPayerStatus(?string $payerStatus): void
+    {
+        $this->payerStatus = $payerStatus;
     }
 
 }

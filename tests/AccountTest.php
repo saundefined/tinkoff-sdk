@@ -7,7 +7,6 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use SprintBox\Api\Model\Snapshot;
 use Tinkoff\Business\Model\Account;
 
 final class AccountTest extends TestCase

@@ -52,6 +52,17 @@ class Client
     }
 
     /**
+     * Отправка платежного поручения
+     * @param Model\Payment $payment
+     *
+     * @return Payment
+     */
+    public function payment(Model\Payment $payment): Payment
+    {
+        return new Payment($this, $payment);
+    }
+
+    /**
      * Запрос к API
      *
      * @param string $command
