@@ -12,8 +12,8 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Panteleev Sergey",
-      "email": "sergey@s-panteleev.ru"
+      "name": "Sergey Panteleev",
+      "email": "sergey@php.net"
     }
   ],
   "require": {
