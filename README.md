@@ -1,6 +1,6 @@
 # Unofficial Tinkoff Business SDK
 
-[![CircleCI](https://circleci.com/gh/saundefined/tinkoff-sdk.svg?style=svg)](https://circleci.com/gh/saundefined/tinkoff-sdk)
+[![GitHub Actions](https://github.com/saundefined/tinkoff-sdk/workflows/Testing%20with%20PHPUnit/badge.svg)]
 [![Latest Stable Version](https://poser.pugx.org/saundefined/tinkoff/v/stable)](https://packagist.org/packages/saundefined/tinkoff)
 [![Latest Unstable Version](https://poser.pugx.org/saundefined/tinkoff/v/unstable)](https://packagist.org/packages/saundefined/tinkoff)
 [![codecov](https://codecov.io/gh/saundefined/tinkoff-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/saundefined/tinkoff-sdk)
