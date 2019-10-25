@@ -5,7 +5,7 @@ namespace Tinkoff\Business\Base;
 use Tinkoff\Business\Exception\OutOfRangeException;
 use function count;
 
-class BaseCollection
+class BaseCollection implements \Iterator
 {
     protected $collection = [];
 
@@ -22,11 +22,6 @@ class BaseCollection
     public function clear(): void
     {
         $this->collection = [];
-    }
-
-    public function current()
-    {
-        return current($this->collection);
     }
 
     public function find(callable $condition)
@@ -57,5 +52,30 @@ class BaseCollection
         }
 
         throw new OutOfRangeException('Index out of bounds of collection');
+    }
+
+    public function current()
+    {
+        return current($this->collection);
+    }
+
+    public function next()
+    {
+        return next($this->collection);
+    }
+
+    public function key()
+    {
+        return key($this->collection);
+    }
+
+    public function valid(): bool
+    {
+        return (bool)current($this->collection);
+    }
+
+    public function rewind(): void
+    {
+        reset($this->collection);
     }
 }
