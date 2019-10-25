@@ -104,57 +104,120 @@ class Operation
 
     public static function createFromArray($data): Operation
     {
-        unset($data['drawDate']);
-
         $model = new self();
-        $model->setId($data['id']);
-        $model->setDate(new DateTime($data['date']));
-        $model->setAmount($data['amount']);
-        $model->setDrawDate(new DateTime($data['drawDate']));
+        if (!empty($data['id'])) {
+            $model->setId($data['id']);
+        }
+        if (!empty($data['date'])) {
+            $model->setDate(new DateTime($data['date']));
+        }
+        if (!empty($data['drawDate'])) {
+            $model->setDrawDate(new DateTime($data['drawDate']));
+        }
+        if (!empty($data['chargeDate'])) {
+            $model->setChargeDate(new DateTime($data['chargeDate']));
+        }
+        if (!empty($data['amount'])) {
+            $model->setAmount($data['amount']);
+        }
 
         $payer = new Company();
-        $payer->setName($data['payerName']);
-        $payer->setInn($data['payerInn']);
-        $payer->setKpp($data['payerKpp']);
+        if (!empty($data['payerName'])) {
+            $payer->setName($data['payerName']);
+        }
+        if (!empty($data['payerInn'])) {
+            $payer->setInn($data['payerInn']);
+        }
+        if (!empty($data['payerKpp'])) {
+            $payer->setKpp($data['payerKpp']);
+        }
 
         $payerBank = new Bank();
-        $payerBank->setAccountNumber($data['payerAccount']);
-        $payerBank->setCorrAccount($data['payerCorrAccount']);
-        $payerBank->setBic($data['payerBic']);
-        $payerBank->setName($data['payerBank']);
+        if (!empty($data['payerAccount'])) {
+            $payerBank->setAccountNumber($data['payerAccount']);
+        }
+        if (!empty($data['payerCorrAccount'])) {
+            $payerBank->setCorrAccount($data['payerCorrAccount']);
+        }
+        if (!empty($data['payerBic'])) {
+            $payerBank->setBic($data['payerBic']);
+        }
+        if (!empty($data['payerBank'])) {
+            $payerBank->setName($data['payerBank']);
+        }
         $payer->setBank($payerBank);
         $model->setPayer($payer);
 
         $recipient = new Company();
-        $recipient->setName($data['recipient']);
-        $recipient->setInn($data['recipientInn']);
-        $recipient->setKpp($data['recipientKpp']);
+        if (!empty($data['recipient'])) {
+            $recipient->setName($data['recipient']);
+        }
+        if (!empty($data['recipientInn'])) {
+            $recipient->setInn($data['recipientInn']);
+        }
+        if (!empty($data['recipientKpp'])) {
+            $recipient->setKpp($data['recipientKpp']);
+        }
 
         $recipientBank = new Bank();
-        $recipientBank->setAccountNumber($data['recipientAccount']);
-        $recipientBank->setCorrAccount($data['recipientCorrAccount']);
-        $recipientBank->setBic($data['recipientBic']);
-        $recipientBank->setName($data['recipientBank']);
+        if (!empty($data['recipientAccount'])) {
+            $recipientBank->setAccountNumber($data['recipientAccount']);
+        }
+        if (!empty($data['recipientCorrAccount'])) {
+            $recipientBank->setCorrAccount($data['recipientCorrAccount']);
+        }
+        if (!empty($data['recipientBic'])) {
+            $recipientBank->setBic($data['recipientBic']);
+        }
+        if (!empty($data['recipientBank'])) {
+            $recipientBank->setName($data['recipientBank']);
+        }
         $recipient->setBank($recipientBank);
         $model->setRecipient($recipient);
 
-        $model->setChargeDate(new DateTime($data['chargeDate']));
-        $model->setPaymentType($data['paymentType']);
-        $model->setOperationType($data['operationType']);
-        $model->setUin($data['uin']);
-        $model->setPaymentPurpose($data['paymentPurpose']);
-        $model->setCreatorStatus($data['creatorStatus']);
-        $model->setExecutionOrder($data['executionOrder']);
+        if (!empty($data['paymentType'])) {
+            $model->setPaymentType($data['paymentType']);
+        }
+        if (!empty($data['operationType'])) {
+            $model->setOperationType($data['operationType']);
+        }
+        if (!empty($data['uin'])) {
+            $model->setUin($data['uin']);
+        }
+        if (!empty($data['paymentPurpose'])) {
+            $model->setPaymentPurpose($data['paymentPurpose']);
+        }
+        if (!empty($data['creatorStatus'])) {
+            $model->setCreatorStatus($data['creatorStatus']);
+        }
+        if (!empty($data['executionOrder'])) {
+            $model->setExecutionOrder($data['executionOrder']);
+        }
 
-        $model->setKbk($data['kbk']);
-        $model->setOktmo($data['oktmo']);
+        if (!empty($data['kbk'])) {
+            $model->setKbk($data['kbk']);
+        }
+        if (!empty($data['oktmo'])) {
+            $model->setOktmo($data['oktmo']);
+        }
 
         $tax = new Tax();
-        $tax->setEvidence($data['taxEvidence']);
-        $tax->setPeriod($data['taxPeriod']);
-        $tax->setNumber($data['taxDocNumber']);
-        $tax->setDate(new DateTime($data['taxDocDate']));
-        $tax->setType($data['taxType']);
+        if (!empty($data['taxEvidence'])) {
+            $tax->setEvidence($data['taxEvidence']);
+        }
+        if (!empty($data['taxPeriod'])) {
+            $tax->setPeriod($data['taxPeriod']);
+        }
+        if (!empty($data['taxDocNumber'])) {
+            $tax->setNumber($data['taxDocNumber']);
+        }
+        if (!empty($data['taxType'])) {
+            $tax->setType($data['taxType']);
+        }
+        if (!empty($data['taxDocDate'])) {
+            $tax->setDate(new DateTime($data['taxDocDate']));
+        }
+
         $model->setTax($tax);
 
         return $model;

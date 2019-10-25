@@ -37,16 +37,33 @@ class Account
     public static function createFromArray($data): ?Account
     {
         $model = new self();
-        $model->setAccountNumber($data['accountNumber']);
-        $model->setStatus($data['status']);
-        $model->setName($data['name']);
-        $model->setCurrency($data['currency']);
+        if (!empty($data['accountNumber'])) {
+            $model->setAccountNumber($data['accountNumber']);
+        }
+        if (!empty($data['status'])) {
+            $model->setStatus($data['status']);
+        }
+        if (!empty($data['name'])) {
+            $model->setName($data['name']);
+        }
+        if (!empty($data['currency'])) {
+            $model->setCurrency($data['currency']);
+        }
 
         $balance = new Balance();
-        $balance->setOtb($data['balance']['otb']);
-        $balance->setAuthorized($data['balance']['authorized']);
-        $balance->setPendingPayments($data['balance']['pendingPayments']);
-        $balance->setPendingRequisitions($data['balance']['pendingRequisitions']);
+        if (!empty($data['balance']['otb'])) {
+            $balance->setOtb($data['balance']['otb']);
+        }
+        if (!empty($data['balance']['authorized'])) {
+            $balance->setAuthorized($data['balance']['authorized']);
+        }
+        if (!empty($data['balance']['pendingPayments'])) {
+            $balance->setPendingPayments($data['balance']['pendingPayments']);
+        }
+        if (!empty($data['balance']['pendingRequisitions'])) {
+            $balance->setPendingRequisitions($data['balance']['pendingRequisitions']);
+        }
+
         $model->setBalance($balance);
 
         return $model;
