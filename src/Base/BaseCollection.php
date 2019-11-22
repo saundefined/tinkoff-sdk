@@ -47,7 +47,7 @@ class BaseCollection implements \Iterator
 
     public function at($index)
     {
-        if ($this->collection[$index]) {
+        if (isset($this->collection[$index])) {
             return $this->collection[$index];
         }
 
